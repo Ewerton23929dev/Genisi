@@ -68,30 +68,30 @@ int main() {
     }
 
     // Obter versão do Android
-    const char *version = get_android_version();
+    AndroidVersion *version = get_android_version();
     android_log(LOG_INFO, "Android Version", version);
 
     return 0;
 }
 ```
-Contribuição
+#Contribuição
 
 Se você deseja contribuir para o projeto GenesisLib, fique à vontade para abrir issues ou pull requests. Todos os tipos de contribuições são bem-vindos!
 
 1. Faça um fork do repositório.
 
 
-2. Crie uma branch para a sua contribuição: git checkout -b minha-contribuicao.
+2. Crie uma branch para a sua contribuição:` git checkout -b minha-contribuicao`.
 
 
-3. Faça suas alterações e commit: git commit -am 'Adiciona nova funcionalidade'.
+3. Faça suas alterações e commit:` git commit -am 'Adiciona nova funcionalidade' `.
 
 
 4. Envie o pull request.
 
 
 
-Licença
+#Licença
 
 Este projeto está licenciado sob a MIT License - veja o arquivo LICENSE para mais detalhes.
 
