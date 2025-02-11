@@ -43,13 +43,9 @@ Isso irá gerar o arquivo libgenesis.a (ou o arquivo compilado apropriado).
 
 3. Incluir no seu projeto:
 
-Adicione a linha a seguir ao seu código-fonte para usar a biblioteca:
-```c
-#include "genesislib/android.h"
-```
 E vincule a biblioteca ao seu projeto durante a compilação, incluindo o diretório include e o arquivo libgenesis.a.
 
-Exemplo de Uso
+# **Exemplo de Uso**
 
 Aqui está um exemplo simples de como utilizar a biblioteca GenesisLib:
 ```c
@@ -91,7 +87,3 @@ Se você deseja contribuir para o projeto GenesisLib, fique à vontade para abri
 # **Licença**
 
 Este projeto está licenciado sob a MIT License - veja o arquivo LICENSE para mais detalhes.
-
-Esse é o seu README em Markdown! É só copiar e colar no seu arquivo `README.md`. Se precisar de mais algum ajuste, é só avisar!
-
-
