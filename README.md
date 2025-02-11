@@ -41,21 +41,21 @@ git clone https://github.com/seuusuario/genesislib.git
 
 cd genesislib
 make
-
+```
 Isso irá gerar o arquivo libgenesis.a (ou o arquivo compilado apropriado).
 
 3. Incluir no seu projeto:
 
 Adicione a linha a seguir ao seu código-fonte para usar a biblioteca:
-
+```c
 #include "genesislib/android.h"
-
+```
 E vincule a biblioteca ao seu projeto durante a compilação, incluindo o diretório include e o arquivo libgenesis.a.
 
 Exemplo de Uso
 
 Aqui está um exemplo simples de como utilizar a biblioteca GenesisLib:
-
+```c
 #include "genesi/AndroidModules/android.h"
 
 int main() {
@@ -73,7 +73,7 @@ int main() {
 
     return 0;
 }
-
+```
 Contribuição
 
 Se você deseja contribuir para o projeto GenesisLib, fique à vontade para abrir issues ou pull requests. Todos os tipos de contribuições são bem-vindos!
