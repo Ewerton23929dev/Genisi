@@ -9,7 +9,7 @@ all:
 	@echo "Compiling object src/android/android_sys.o..."
 	@$(CC) $(CFLAGS) -c src/android/android_sys.c -o src/android/android_sys.o
 	@echo "Compiling shared library version linker src/genisi.version..."
-	@$(CC) $(STATIC) -Wl,-rpath-link,/system/lib -shared $(OBJS) -o libgenisi.so.1.0
+	@$(CC) $(STATIC) -Wl,-rpath-link,/system/lib -shared $(OBJS) -o libgenisi.so
 	@$(MAKE) Oclear
 Oclear:
 	@find . -type f -name "*.o" -exec rm -f {} \;

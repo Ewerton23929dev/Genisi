@@ -39,7 +39,7 @@ git clone https://github.com/seuusuario/genesislib.git
 cd genesislib
 make
 ```
-Isso irá gerar o arquivo libgenesis.a (ou o arquivo compilado apropriado).
+Isso irá gerar o arquivo libgenesis.so (ou o arquivo compilado apropriado).
 
 3. Incluir no seu projeto:
 
