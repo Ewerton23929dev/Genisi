@@ -21,10 +21,7 @@ A biblioteca foi projetada para ser leve e de fácil integração em projetos C,
 - `android_arch`: Função que retorna a arquitetura do dispositivo Android.
 - `android_globals`: Variáveis globais que armazenam configurações específicas do Android.
 
-## **Estrutura do Projeto**
-
-GenesisLib/ │── src/ │   ├── android.c            # Implementação das funções da biblioteca │   ├── main.c               # Arquivo principal para testes (opcional) │── include/ │   ├── android.h            # Cabeçalho com declarações das funções e tipos │── Makefile                 # Arquivo de build │── README.md                # Este arquivo
-
+## **Estrutura do Projeto.
 - **src/**: Contém o código-fonte da biblioteca.
 - **include/**: Contém os arquivos de cabeçalho, onde as funções da biblioteca são declaradas.
 - **Makefile**: Arquivo para compilar e gerar a biblioteca.
@@ -74,7 +71,7 @@ int main() {
     return 0;
 }
 ```
-#Contribuição
+# **Contribuição**
 
 Se você deseja contribuir para o projeto GenesisLib, fique à vontade para abrir issues ou pull requests. Todos os tipos de contribuições são bem-vindos!
 
@@ -91,7 +88,7 @@ Se você deseja contribuir para o projeto GenesisLib, fique à vontade para abri
 
 
 
-#Licença
+# **Licença**
 
 Este projeto está licenciado sob a MIT License - veja o arquivo LICENSE para mais detalhes.
 
