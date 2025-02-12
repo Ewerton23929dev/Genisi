@@ -1,6 +1,6 @@
 # **GenesisLib**
 
-**GenesisLib** é uma biblioteca em C que fornece uma abstração para o sistema Android. O objetivo do projeto é facilitar a interação com o Android, fornecendo funções e módulos reutilizáveis para tarefas comuns, como gerenciamento de logs, verificação de root, e obtenção de informações do sistema Android.
+**GenesisLib** é uma biblioteca em C que fornece uma abstração para o sistema Android. O objetivo do projeto é facilitar a interação com o Android, fornecendo funções e módulos reutilizáveis para tarefas comuns, como gerenciamento de logs, verificação de root, e obtenção de informações do sistema Android. Uma biblioteca unica para ser usada fora do ambinete de aplicativos comumente usados.
 
 ## **Descrição**
 
@@ -21,7 +21,7 @@ A biblioteca foi projetada para ser leve e de fácil integração em projetos C,
 - `android_arch`: Função que retorna a arquitetura do dispositivo Android.
 - `android_globals`: Variáveis globais que armazenam configurações específicas do Android.
 
-## **Estrutura do Projeto.
+## **Estrutura do Projeto**.
 - **src/**: Contém o código-fonte da biblioteca.
 - **include/**: Contém os arquivos de cabeçalho, onde as funções da biblioteca são declaradas.
 - **Makefile**: Arquivo para compilar e gerar a biblioteca.
@@ -33,9 +33,9 @@ Para usar a biblioteca **GenesisLib** em seu projeto, basta seguir os passos aba
 ### **1. Clonar o repositório:**
 ```bash
 git clone https://github.com/seuusuario/genesislib.git
-
+```
 2. Compilar a biblioteca:
-
+```bash
 cd genesislib
 make
 ```
