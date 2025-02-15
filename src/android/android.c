@@ -13,26 +13,33 @@ int android_log(AndroidLoggin mode, const char* tag,const char* fmt) {
      switch (mode) {
           // cases de implementação.
           case INFO:
-              printf("[INFO:%s] - %s",tag,fmt);
+              printf("[INFO:%s] - %s\n",tag,fmt);
               __android_log_print(ANDROID_LOG_INFO,tag,"%s",fmt);
+              break;
           case WARN:
-              printf("[WARN:%s] - %s",tag,fmt);
+              printf("[WARN:%s] - %s\n",tag,fmt);
               __android_log_print(ANDROID_LOG_WARN,tag,"%s",fmt);
+              break;
           case ERRO:
-              printf("[ERRO:%s] - %s",tag,fmt);
+              printf("[ERRO:%s] - %s\n",tag,fmt);
               __android_log_print(ANDROID_LOG_ERROR,tag,"%s",fmt);
+              break;
           case DEBUG:
-              printf("[DEBUG:%s] - %s",tag,fmt);
+              printf("[DEBUG:%s] - %s\n",tag,fmt);
               __android_log_print(ANDROID_LOG_DEBUG,tag,"%s",fmt);
+              break;
           case FATAL:
-              printf("[FATAL:%s] - %s",tag,fmt);
+              printf("[FATAL:%s] - %s\n",tag,fmt);
               __android_log_print(ANDROID_LOG_FATAL,tag,"%s",fmt);
+              break;
           case VERBOSE:
-              printf("[VERBOSE:%s] - %s",tag,fmt);
+              printf("[VERBOSE:%s] - %s\n",tag,fmt);
               __android_log_print(ANDROID_LOG_VERBOSE,tag,"%s",fmt);
+              break;
           default:
              return 1;
      }
+     return 0;
 }
 
 //checa ser e root!
