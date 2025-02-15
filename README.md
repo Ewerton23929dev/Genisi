@@ -28,6 +28,6 @@ int main() {
 }
 ```
 Copile passando o diretorio ``genisi`` ou coloque em seus projetos!
-
+Pode encontrar mais sobre na [WIKI](https://github.com/Ewerton23929dev/Genisi/wiki).
 
 MIT License © 2025 Ewerton23929dev
