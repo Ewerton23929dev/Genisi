@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -I./lib -I./genisi
+CFLAGS = -I./lib -I./genisi -L./lib
 STATIC = -llog
 OBJS = src/android/android.o src/android/android_sys.o
 
