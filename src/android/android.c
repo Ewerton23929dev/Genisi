@@ -84,14 +84,17 @@ int android_runner(const char* bin) {
    //chama pelo nome que esta no buffer  snprintf(RunnerBuffer,sizeof(RunnerBuffer,".%s/%s",ANDROID_TMP,strrchr(bin, '/') ? strrchr(bin, '/') + 1 : bin);
     // executa!
     if (system(cmdBuffer) != 0) {
+        __android_log_print(ANDROID_LOG_ERROR, "genisi", "Erro ao copiar o binário!");
         perror("Erro ao copiar o binário");
         return -1;
     }
     if (system(chmodBuffer) != 0) {
+        __android_log_print(ANDROID_LOG_ERROR, "genisi", "Erro ao alterar permissões!");
         perror("Erro ao alterar permissões");
         return -1;
     }
     if (system(RunnerBuffer) != 0) {
+       __android_log_print(ANDROID_LOG_FATAL, "genisi", "Erro fatal na execução do cache!");
        perror("Erro fatal na execução do cache!");
        return -1;
     }

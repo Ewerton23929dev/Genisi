@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <androidModules/android_sys.h>
 #include <android/versioning.h>
+#include <android/log.h>
 #include <sys/sysinfo.h>
 
 // suporte para android 10++ api 29++
@@ -16,7 +17,8 @@ AndroidGlobals android_globals() {
        global.shared_ram = info.sharedram;
        global.proc = info.procs;
     } else {
-      perror("Erro de chamada de globals");
+      __android_log_print(ANDROID_LOG_ERROR, "genisi", "Error extracting globals!");
+      perror("Error extracting globals!");
     }
     return global;
 }
