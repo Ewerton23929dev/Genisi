@@ -19,4 +19,4 @@ clear:
 	@echo "clear..."
 	@rm libgenisi.so*
 exemple:
-	@$(CC) -L./ -I./genisi test/main.c -o exemple -lgenisi
+	@$(CC) -g -L./ -I./genisi test/main.c -o exemple -lgenisi

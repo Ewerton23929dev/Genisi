@@ -15,5 +15,5 @@ long int androidSpace;
 int android_memoryInit();
 void* android_malloc(size_t size);
 int android_free(void* prt);
-void android_close();
+void android_memoryClose();
 #endif

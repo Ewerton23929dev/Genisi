@@ -1,43 +1,60 @@
 #include <unistd.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
+#include <stdarg.h>
+#include <time.h>
 #include <androidModules/android.h>
 #include <string.h>
 #include <android/log.h>
 
 // constantes.
+int androidDebug = true;
 #define ANDROID_TMP "/data/local/tmp"
 
 // sistema de log
-int android_log(AndroidLoggin mode, const char* tag,const char* fmt) {
+int android_log(AndroidLoggin mode, const char* tag,const char* fmt, ...) {
+  char buffer[600];
+  va_list args;
+  va_start(args,fmt);
+  vsnprintf(buffer, sizeof(buffer), fmt, args);
+  va_end(args);
+  struct timespec ts;
+  clock_gettime(CLOCK_REALTIME, &ts);
+  struct tm *tm_info;
+  tm_info = localtime(&ts.tv_sec);
+  char type[500];
      switch (mode) {
           // cases de implementação.
           case INFO:
-              printf("[INFO:%s] - %s\n",tag,fmt);
+              strcpy(type,"INFO");
               __android_log_print(ANDROID_LOG_INFO,tag,"%s",fmt);
               break;
           case WARN:
-              printf("[WARN:%s] - %s\n",tag,fmt);
+             strcpy(type,"WARN");
               __android_log_print(ANDROID_LOG_WARN,tag,"%s",fmt);
               break;
           case ERRO:
-              printf("[ERRO:%s] - %s\n",tag,fmt);
+              strcpy(type,"\033[31mERRO\033[0m");
               __android_log_print(ANDROID_LOG_ERROR,tag,"%s",fmt);
               break;
           case DEBUG:
-              printf("[DEBUG:%s] - %s\n",tag,fmt);
+              strcpy(type,"\033[33mDEBUG\033[0m");
               __android_log_print(ANDROID_LOG_DEBUG,tag,"%s",fmt);
               break;
           case FATAL:
-              printf("[FATAL:%s] - %s\n",tag,fmt);
+              strcpy(type,"\033[31mFATAL\033[0m");
               __android_log_print(ANDROID_LOG_FATAL,tag,"%s",fmt);
               break;
           case VERBOSE:
-              printf("[VERBOSE:%s] - %s\n",tag,fmt);
+              strcpy(type,"\033[35mVERBOSE\033[0m");
               __android_log_print(ANDROID_LOG_VERBOSE,tag,"%s",fmt);
               break;
           default:
              return 1;
+     }
+     if (androidDebug) {
+       printf("[\033[32m%02d-%02d:%02d-%02d-%02d\033[0m] - %s:%s - %s\n",tm_info->tm_mon + 1,tm_info->tm_mday,tm_info->tm_hour,tm_info->tm_min,tm_info->tm_sec,type,tag,buffer);
      }
      return 0;
 }
@@ -84,17 +101,17 @@ int android_runner(const char* bin) {
    //chama pelo nome que esta no buffer  snprintf(RunnerBuffer,sizeof(RunnerBuffer,".%s/%s",ANDROID_TMP,strrchr(bin, '/') ? strrchr(bin, '/') + 1 : bin);
     // executa!
     if (system(cmdBuffer) != 0) {
-        __android_log_print(ANDROID_LOG_ERROR, "genisi", "Erro ao copiar o binário!");
+        android_log(ERRO, "genisi", "Erro ao copiar o binário!");
         perror("Erro ao copiar o binário");
         return -1;
     }
     if (system(chmodBuffer) != 0) {
-        __android_log_print(ANDROID_LOG_ERROR, "genisi", "Erro ao alterar permissões!");
+        android_log(ERRO, "genisi", "Erro ao alterar permissões!");
         perror("Erro ao alterar permissões");
         return -1;
     }
     if (system(RunnerBuffer) != 0) {
-       __android_log_print(ANDROID_LOG_FATAL, "genisi", "Erro fatal na execução do cache!");
+       android_log(FATAL, "genisi", "Erro fatal na execução do cache!");
        perror("Erro fatal na execução do cache!");
        return -1;
     }

@@ -1,4 +1,4 @@
-#include <android/log.h>
+#include <androidModules/android.h>
 #include <stdlib.h>
 #include <stddef.h>
 
@@ -15,10 +15,10 @@ long int androidSpace = 0;
 int android_memoryInit() {
     androidAllocs = (void**) malloc(MEM_INIT * sizeof(void*));
     if (!androidAllocs) {
-        __android_log_print(ANDROID_LOG_ERROR, "genisi", "Error allocating initial memory!");
+        android_log(ERRO, "genisi", "Error allocating initial memory!");
         return 1;
     }
-    __android_log_print(ANDROID_LOG_INFO, "genisi", "Initial memory allocated!");
+    android_log(INFO, "genisi", "Initial memory allocated!");
     androidSize = 0;
     androidSpace = 0;
     return 0;
@@ -26,19 +26,19 @@ int android_memoryInit() {
 
 void* android_malloc(size_t size) {
     if (androidSpace + size > androidMax) {
-        __android_log_print(ANDROID_LOG_FATAL, "genisi", "Fatal error: size exceeds maximum memory!");
+        android_log(ERRO, "genisi", "Fatal error: size exceeds maximum memory!");
         return NULL;
     }
 
     void* ptr = malloc(size);
     if (!ptr) {
-        __android_log_print(ANDROID_LOG_ERROR, "genisi", "Error allocating memory!");
+        android_log(ERRO, "genisi", "Error allocating memory!");
         return NULL;
     }
 
     androidAllocs[androidSize++] = ptr;
     androidSpace += size;
-    __android_log_print(ANDROID_LOG_INFO, "genisi", "Memory allocated: %p", ptr);
+    android_log(INFO, "genisi", "Memory allocated: %p", ptr);
 
     return ptr;
 }
@@ -52,23 +52,23 @@ int android_free(void* ptr) {
             // Replace with the last pointer and reduce size
             androidAllocs[t] = androidAllocs[--androidSize];
 
-            __android_log_print(ANDROID_LOG_INFO, "genisi", "Pointer freed!");
+            android_log(INFO, "genisi", "Pointer freed!");
             return 0;
         }
     }
-    __android_log_print(ANDROID_LOG_ERROR, "genisi", "Pointer not found!");
+    android_log(ERRO, "genisi", "Pointer not found!");
     return 1;
 }
 
-void android_close() {
+void android_memoryClose() {
     for (int i = 0; i < androidSize; i++) {
         if (androidAllocs[i]) {
             free(androidAllocs[i]);
-            __android_log_print(ANDROID_LOG_INFO, "genisi", "Pointer freed: %p!", androidAllocs[i]);
+            android_log(INFO, "genisi", "Pointer freed: %p!", androidAllocs[i]);
         }
     }
     free(androidAllocs);
     androidSize = 0;
     androidSpace = 0;
-    __android_log_print(ANDROID_LOG_INFO, "genisi", "All pointers freed!");
+    android_log(INFO, "genisi", "All pointers freed!");
 }
