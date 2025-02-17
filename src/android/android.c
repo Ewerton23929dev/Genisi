@@ -1,6 +1,5 @@
 #include <unistd.h>
 #include <stdio.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <time.h>
@@ -9,7 +8,7 @@
 #include <android/log.h>
 
 // constantes.
-int androidDebug = true;
+int androidDebug = 0;
 #define ANDROID_TMP "/data/local/tmp"
 
 // sistema de log

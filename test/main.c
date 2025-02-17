@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 int main() {
-  androidDebug = true;
+  androidDebug = 0;
   AndroidGlobals infos = android_globals();
   printf("Infos %ld \n", infos.total_ram);
   printf("Versão: %d \n", get_android_version());
