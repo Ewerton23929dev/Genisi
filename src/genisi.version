@@ -1,12 +1,24 @@
-GENISI_1.0 {
+GENISI {
     global:
-        android_globals;
-        get_android_version;
+        androidAllocs;
+        androidDebug;
+        androidMax;
+        androidSize;
+        androidSpace;
         android_arch;
+        android_dlMethod;
+        android_dlauto;
+        android_dlexit;
+        android_dload;
+        android_free;
         android_globals;
+        android_goto;
         android_isroot;
+        android_log;
+        android_malloc;
+        android_memoryClose;
+        android_memoryInit;
         android_runner;
-        get_android_version;
     local:
         *;
 };

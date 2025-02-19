@@ -1,9 +1,20 @@
 #ifndef __ANDROID_SYS_H
 #define __ANDROID_SYS_H
+
+#ifdef _cplusplus
+extern "C" {
+#endif
+
 /* 
 Implementação de android sys com implementação de funções de pegar os globals como status de memoria... e versão do android com saida usando o enum.
 */
 #pragma once
+/**
+ * @brief Struct de versoes.
+ *
+ * Struct para versoes do android.
+ * 
+ */
 typedef enum {
     ANDROID_UNKNOWN = -1,
     ANDROID_BASE = 1,          
@@ -28,12 +39,39 @@ typedef enum {
     ANDROID_13 = 33,           
     ANDROID_14 = 34            
 } AndroidVersion;
+/**
+ * @brief Struct globals. 
+ *
+ * Struct para globals.
+ * 
+ */
 typedef struct {
       long int total_ram;
       long int free_ram;
       long int shared_ram;
       int proc;
 } AndroidGlobals;
+/**
+ * @brief Coleta de globals.
+ *
+ * Retorna o globals e estatus.
+ * 
+ * @param 
+ * @return AndroidGlobals
+ */
 extern AndroidGlobals android_globals();
+/**
+ * @brief Coleta versão.
+ *
+ * Retorna a versão correspondente do sistema.
+ * 
+ * @param 
+ * @return AndroidVersion
+ */
 extern AndroidVersion get_android_version();
+
+#ifdef _cplusplus
+}
+#endif
+
 #endif

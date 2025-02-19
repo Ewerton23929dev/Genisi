@@ -8,7 +8,7 @@
 #include <android/log.h>
 
 // constantes.
-int androidDebug = 0;
+int androidDebug = ON;
 #define ANDROID_TMP "/data/local/tmp"
 
 // sistema de log
@@ -52,7 +52,7 @@ int android_log(AndroidLoggin mode, const char* tag,const char* fmt, ...) {
           default:
              return 1;
      }
-     if (androidDebug) {
+     if (androidDebug == ON) {
        printf("[\033[32m%02d-%02d:%02d-%02d-%02d\033[0m] - %s:%s - %s\n",tm_info->tm_mon + 1,tm_info->tm_mday,tm_info->tm_hour,tm_info->tm_min,tm_info->tm_sec,type,tag,buffer);
      }
      return 0;
