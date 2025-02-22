@@ -23,7 +23,7 @@ typedef struct {
  * @param const char* path
  * @return void*
  */
-void* android_dload(const char* path);
+GenisiHandle* android_dload(const char* path);
 /**
  * @brief Pega funçao da biblioteca.
  *

@@ -3,10 +3,17 @@
 #include <androidModules/android_sys.h>
 #include <android/versioning.h>
 #include <android/log.h>
+#include <sys/resource.h>
 #include <sys/sysinfo.h>
 
 // suporte para android 10++ api 29++
 // Definição do enum para representar versões do Android
+
+long int android_memoryLimits() {
+    struct rlimit limit;
+    getrlimit(RLIMIT_AS, &limit);
+    return limit.rlim_cur;
+}
 
 AndroidGlobals android_globals() {
     AndroidGlobals global = {-1,-1,-1,-1};

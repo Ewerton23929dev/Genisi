@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void* android_dload(const char* path) {
+GenisiHandle* android_dload(const char* path) {
   GenisiHandle* lib = malloc(sizeof(GenisiHandle));
   if (!lib) {
     android_log(ERRO, "genisi", "Failed to allocate library handle %s", path);

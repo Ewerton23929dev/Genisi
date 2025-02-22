@@ -13,7 +13,7 @@ int androidDebug = ON;
 
 // sistema de log
 int android_log(AndroidLoggin mode, const char* tag,const char* fmt, ...) {
-  char buffer[600];
+  char buffer[1000];
   va_list args;
   va_start(args,fmt);
   vsnprintf(buffer, sizeof(buffer), fmt, args);
@@ -27,27 +27,27 @@ int android_log(AndroidLoggin mode, const char* tag,const char* fmt, ...) {
           // cases de implementação.
           case INFO:
               strcpy(type,"INFO");
-              __android_log_print(ANDROID_LOG_INFO,tag,"%s",fmt);
+              __android_log_print(ANDROID_LOG_INFO,tag,"%s",buffer);
               break;
           case WARN:
              strcpy(type,"WARN");
-              __android_log_print(ANDROID_LOG_WARN,tag,"%s",fmt);
+              __android_log_print(ANDROID_LOG_WARN,tag,"%s",buffer);
               break;
           case ERRO:
               strcpy(type,"\033[31mERRO\033[0m");
-              __android_log_print(ANDROID_LOG_ERROR,tag,"%s",fmt);
+              __android_log_print(ANDROID_LOG_ERROR,tag,"%s",buffer);
               break;
           case DEBUG:
               strcpy(type,"\033[33mDEBUG\033[0m");
-              __android_log_print(ANDROID_LOG_DEBUG,tag,"%s",fmt);
+              __android_log_print(ANDROID_LOG_DEBUG,tag,"%s",buffer);
               break;
           case FATAL:
               strcpy(type,"\033[31mFATAL\033[0m");
-              __android_log_print(ANDROID_LOG_FATAL,tag,"%s",fmt);
+              __android_log_print(ANDROID_LOG_FATAL,tag,"%s",buffer);
               break;
           case VERBOSE:
               strcpy(type,"\033[35mVERBOSE\033[0m");
-              __android_log_print(ANDROID_LOG_VERBOSE,tag,"%s",fmt);
+              __android_log_print(ANDROID_LOG_VERBOSE,tag,"%s",buffer);
               break;
           default:
              return 1;
@@ -96,8 +96,6 @@ int android_runner(const char* bin) {
     snprintf(destPath, sizeof(destPath), "%s/%s", ANDROID_TMP, strrchr(bin, '/') ? strrchr(bin, '/') + 1 : bin);
     snprintf(cmdBuffer, sizeof(cmdBuffer), "cp %s %s", bin, destPath);
     snprintf(chmodBuffer, sizeof(chmodBuffer), "chmod +x %s", destPath);
-  
-   //chama pelo nome que esta no buffer  snprintf(RunnerBuffer,sizeof(RunnerBuffer,".%s/%s",ANDROID_TMP,strrchr(bin, '/') ? strrchr(bin, '/') + 1 : bin);
     // executa!
     if (system(cmdBuffer) != 0) {
         android_log(ERRO, "genisi", "Erro ao copiar o binário!");

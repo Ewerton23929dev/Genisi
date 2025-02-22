@@ -69,7 +69,7 @@ extern AndroidGlobals android_globals();
  * @return AndroidVersion
  */
 extern AndroidVersion get_android_version();
-
+extern long int android_memoryLimits();
 #ifdef _cplusplus
 }
 #endif
