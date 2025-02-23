@@ -1,5 +1,5 @@
 # **Genisi Android**
-![version](https://img.shields.io/badge/Version-1.0.20-green) ![C](https://img.shields.io/badge/Linguagem-C-blue?logo=c) ![Linux](https://img.shields.io/badge/Plataforma_para-Linux-black?logo=linux) ![Android](https://img.shields.io/badge/Feito_para-Android-green?logo=android) ![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)
+![version](https://img.shields.io/badge/Version-1.0.21-green) ![C](https://img.shields.io/badge/Linguagem-C-blue?logo=c) ![Linux](https://img.shields.io/badge/Plataforma_para-Linux-black?logo=linux) ![Android](https://img.shields.io/badge/Feito_para-Android-green?logo=android) ![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)
 
 Genisi a biblioteca para suporte para android em C/C++.
 
