@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <errno.h>
 #include <androidModules/android_sys.h>
 #include <android/versioning.h>
@@ -58,4 +59,27 @@ AndroidVersion get_android_version() {
         case 34: return ANDROID_14;
         default: return ANDROID_UNKNOWN;
     }
+}
+//checa ser e root!
+int android_isroot() {
+    return getuid() == 0;
+}
+
+// pega a arquitera do sistema!
+const char* android_arch() {
+    #if defined(__x86_64__) || defined(__amd64__)
+        return "x86_64";
+    #elif defined(__i386__)
+        return "x86";
+    #elif defined(__aarch64__)
+        return "arm64";
+    #elif defined(__arm__)
+        return "arm";
+    #elif defined(__mips__)
+        return "mips";
+    #elif defined(__riscv)
+        return "riscv";
+    #else
+        return "unknown";
+    #endif
 }

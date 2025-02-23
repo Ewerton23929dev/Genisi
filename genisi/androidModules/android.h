@@ -8,7 +8,6 @@ extern "C" {
 Implementação do basico do sistema da lib funções de execução de binario em ambiente android e pegar arquitetura do android e verificação de root e logs android com entrada de AndroidLoggin. Sistema não incluido abiguidade de versão do android ou check.
 */
 #pragma once
-#define ANDROID_TMP "/data/local/tmp"
 
 /**
  * @brief Enum para opçoes do android_log
@@ -34,24 +33,7 @@ typedef enum {
      FATAL,
      VERBOSE
 } AndroidLoggin;
-/**
- * @brief Executa binario em ambiente android.
- *
- * Funçao que executa binarios em ambiente android em /data/local/tmp.
- * 
- * @param path_bin
- * @return int
- */
-extern int android_runner(const char* bin);
-/**
- * @brief Adiquire a arquitetura do android.
- *
- * Retorna a arquitetura do android.
- * 
- * @param 
- * @return const char* 
- */
-extern const char* android_arch();
+
 /**
  * @brief Variavel de log em shell.
  * 
@@ -59,15 +41,7 @@ extern const char* android_arch();
  *
  */
 extern int androidDebug;
-/**
- * @brief Verifica ser e root.
- * 
- * Retorna 1 para nao root e 0 para root.
- *
- * @param 
- * @return int
- */
-extern int android_isroot();
+
 /**
  * @brief Funçao para logs.
  *

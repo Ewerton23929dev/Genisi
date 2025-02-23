@@ -10,6 +10,24 @@ Implementação de android sys com implementação de funções de pegar os glob
 */
 #pragma once
 /**
+ * @brief Adiquire a arquitetura do android.
+ *
+ * Retorna a arquitetura do android.
+ * 
+ * @param 
+ * @return const char* 
+ */
+extern const char* android_arch();
+/**
+ * @brief Verifica ser e root.
+ * 
+ * Retorna 1 para nao root e 0 para root.
+ *
+ * @param 
+ * @return int
+ */
+extern int android_isroot();
+/**
  * @brief Struct de versoes.
  *
  * Struct para versoes do android.
