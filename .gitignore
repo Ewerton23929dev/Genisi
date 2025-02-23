@@ -1,4 +1,4 @@
 *.o
 libgenisi.so
 exemple
-
+log/

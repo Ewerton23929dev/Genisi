@@ -51,7 +51,15 @@ extern int androidDebug;
  * @return int 
  */
 extern int android_log(AndroidLoggin mode,const char* tag,const char* fmt, ...);
-
+/**
+ * @brief Funçao para logs em arquivo.
+ *
+ * Funçao para logs em arquivo.
+ * 
+ * @param const char* path
+ * @return void
+ */
+void android_FileLog(const char* path);
 
 #ifdef _cplusplus
 }

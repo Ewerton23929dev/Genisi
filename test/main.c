@@ -5,6 +5,7 @@
 
 int main() {
   androidDebug = ON;
+  android_FileLog("log/log.log");
   AndroidGlobals infos = android_globals();
   printf("Infos %ld \n", infos.total_ram);
   printf("Versão: %d \n", get_android_version());

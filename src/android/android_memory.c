@@ -14,15 +14,15 @@ int android_memoryInit() {
   GENISI = malloc(sizeof(Partion));
   JAVA = malloc(sizeof(Partion));
   if (!USER) {
-    android_log(FATAL, "genisi", "Falha ao montar partiçao de memoria USER!");
+    android_log(FATAL, "genisi", "Failed to mount USER memory partition!");
     return 1;
   }
   if (!GENISI) {
-    android_log(FATAL, "genisi", "Falha ao montar partiçao de memoria GENISI!");
+    android_log(FATAL, "genisi", "Failed to mount GENISI memory partition!");
     return 1;
   }
   if (!JAVA) {
-    android_log(FATAL, "genisi", "Falha ao alocar partiçao de memoria JAVA!");
+    android_log(FATAL, "genisi", "Failed to allocate JAVA memory partition!");
   }
   
   USER->usedsize = 0;
@@ -36,10 +36,10 @@ int android_memoryInit() {
   GENISI->memory = malloc(SIZE * sizeof(Alloc));
   JAVA->memory = malloc(SIZE * sizeof(Alloc));
   if (!USER->memory || !GENISI->memory || !JAVA->memory) {
-    android_log(FATAL, "genisi", "Falha ao alocar memoria das partiçoes");
+    android_log(FATAL, "genisi", "Failed to allocate partition memory");
     return 2;
   }
-  android_log(INFO, "genisi", "Partiçoes alocadas com sucesso!");
+  android_log(INFO, "genisi", "Partitions allocated successfully!");
   return 1;
 }
 
@@ -47,7 +47,7 @@ Alloc* android_malloc(int size, androidSpaces sp) {
   Alloc* diretive = malloc(sizeof(Alloc));
   void* prt = malloc(size);
   if (!prt || !diretive) {
-    android_log(ERRO, "genisi", "Erro ao alocar ponteiro!");
+    android_log(ERRO, "genisi", "Error allocating pointer %p!", diretive);
     return NULL;
   }
   diretive->prt = prt;
@@ -70,7 +70,7 @@ Alloc* android_malloc(int size, androidSpaces sp) {
     JAVA->memory[JAVA->usedsize] = diretive;
     break;
   }
-  android_log(INFO, "genisi", "Ponteiro alocado com sucesso %p em %d", diretive, diretive->pose);
+  android_log(INFO, "genisi", "Successfully allocated pointer %p in %d", diretive, diretive->pose);
   return diretive;
 }
 
@@ -108,12 +108,12 @@ void android_free(Alloc* prt, androidSpaces sp) {
     free(prt);
     break;
   }
-  android_log(INFO, "genisi", "Ponteiro eliminado em: %d", pose);
+  android_log(INFO, "genisi", "Pointer deleted at: %d", pose);
 }
 
 void android_memoryClose() {
   if (GENISI == NULL || USER == NULL || JAVA == NULL) {
-    android_log(ERRO, "genisi", "Partiçoes fechadas!");
+    android_log(ERRO, "genisi", "Partitions closed!");
     return;
   }
   if (0 < USER->usedsize || 0 < GENISI->usedsize || JAVA->usedsize) {
@@ -123,7 +123,7 @@ void android_memoryClose() {
     free(JAVA->memory);
     free(JAVA);
     free(GENISI);
-    android_log(INFO, "genisi", "Partiçoes limpas liberadas!");
+    android_log(INFO, "genisi", "Partitions released successfully!");
     return;
   }
   for (int i = 0; i < USER->usedsize; i++) {
@@ -147,5 +147,5 @@ void android_memoryClose() {
   USER = NULL;
   GENISI = NULL;
   JAVA = NULL;
-  android_log(INFO, "genisi", "Partiçoes liberadas com sucesso!");
+  android_log(INFO, "genisi", "Partitions released successfully!");
 }

@@ -60,13 +60,13 @@ int android_log(AndroidLoggin mode, const char* tag,const char* fmt, ...) {
          printf("[\033[32m%02d-%02d:%02d-%02d-%02d\033[0m] - %s:%s - %s\n",tm_info->tm_mon + 1,tm_info->tm_mday,tm_info->tm_hour,tm_info->tm_min,tm_info->tm_sec,type,tag,buffer);
          return 0;
        }
-       FILE *logfile = fopen(pathLoggin, "w");
+       FILE *logfile = fopen(pathLoggin, "a");
        if (!logfile) {
        printf("[\033[32m%02d-%02d:%02d-%02d-%02d\033[0m] - %s:%s - %s\n",tm_info->tm_mon + 1,tm_info->tm_mday,tm_info->tm_hour,tm_info->tm_min,tm_info->tm_sec,type,tag,buffer);
        return 1;
        }
        printf("[\033[32m%02d-%02d:%02d-%02d-%02d\033[0m] - %s:%s - %s\n",tm_info->tm_mon + 1,tm_info->tm_mday,tm_info->tm_hour,tm_info->tm_min,tm_info->tm_sec,type,tag,buffer);
-       fprintf(logfile, "[\033[32m%02d-%02d:%02d-%02d-%02d\033[0m] - %s:%s - %s\n",tm_info->tm_mon + 1,tm_info->tm_mday,tm_info->tm_hour,tm_info->tm_min,tm_info->tm_sec,type,tag,buffer);
+       fprintf(logfile, "[%02d-%02d:%02d-%02d-%02d] - %s:%s - %s\n",tm_info->tm_mon + 1,tm_info->tm_mday,tm_info->tm_hour,tm_info->tm_min,tm_info->tm_sec,type,tag,buffer);
        fclose(logfile);
      }
      return 0;
