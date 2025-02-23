@@ -1,6 +1,6 @@
-#include <AndroidModules/android_sys.h>
-#include <AndroidModules/android.h>
-#include <AndroidModules/android_memory.h>
+#include <androidModules/android_sys.h>
+#include <androidModules/android.h>
+#include <androidModules/android_memory.h>
 #include <stdio.h>
 
 int main() {
