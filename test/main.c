@@ -13,7 +13,7 @@ int main() {
   android_log(INFO, "teste", "HELLO WORLD!");
   printf("Informaçoes do android_memory %d\n", android_memoryInit());
   Alloc* prt = android_malloc(500, USER_SPACE);
-  printf("Informaçoes do ponteiro: %p\n", prt);
+  printf("Informaçoes do ponteiro: %p\n", prt->ptr);
   android_free(prt, USER_SPACE);
   android_memoryClose();
   return 0;

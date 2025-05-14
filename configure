@@ -1,3 +1,42 @@
+#$PREFIX/bin/bash
+
+if [ -d "lib" ]; then
+  echo " DIR   Found lib"
+else
+  echo " DIR   Not found lib"
+  exit 1
+fi
+sleep 1
+if [ -d "genisi" ]; then
+  echo " DIR   Found genisi"
+else
+  echo " DIR   Not found genisi"
+  exit 1
+fi
+sleep 1
+if [ -d "src" ]; then
+  echo " DIR   Found src"
+else
+  echo " DIR   Not found src"
+  exit 1
+fi
+sleep 1
+if [ -d "test" ]; then
+  echo " DIR   Found test"
+else
+  echo " DIR   Not found test"
+  exit 1
+fi
+sleep 1
+if [ -f "$PREFIX/bin/gcc" ]; then
+  echo " PRO   Found gcc"
+else
+  echo " PRO   Not found gcc"
+  echo " PRO   Try used 'sudo apt install clang'"
+  exit 1
+fi
+
+cat > Makefile <<'EOF'
 CC = gcc
 CFLAGS = -I./lib -I./genisi -fPIC
 STATIC = -llog -ldl
@@ -32,3 +71,6 @@ clear:
 	@rm libgenisi.so*
 exemple:
 	@$(CC) -g -L./ -I./genisi test/main.c -o exemple -lgenisi
+EOF
+
+echo " END  Configure ok.."
