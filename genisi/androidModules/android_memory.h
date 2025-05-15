@@ -13,7 +13,7 @@ typedef enum {
   JAVA_SPACE
 } androidSpaces;
 typedef struct {
-  void* prt;
+  void* ptr;
   int pose;
   int size;
 } Alloc;
@@ -24,7 +24,7 @@ typedef struct {
 } Partion;
 
 int android_memoryInit();
-Alloc* android_malloc(int size, androidSpaces sp);
+Alloc* android_malloc(unsigned int size, androidSpaces sp);
 void android_free(Alloc* prt, androidSpaces sp);
 void android_memoryClose();
 #ifdef _cplusplus

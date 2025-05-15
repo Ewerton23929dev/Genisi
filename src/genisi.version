@@ -13,8 +13,14 @@ GENISI_1.0 {
         android_log;
         android_malloc;
         android_memoryInit;
+        android_memoryClose;
         android_runner;
         get_android_version;
+        
+        
+        Java_Genisi_getVersion;
+        Java_Genisi_CloseMemory;
+        Java_Genisi_InitMemory;
     local:
         *;
 };
