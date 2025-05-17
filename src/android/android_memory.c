@@ -4,135 +4,129 @@
 
 #define SIZE (10 * 1024)
 
-#define CHECK_ALLOC(ptr, msg) if (!(ptr)) { android_log(FATAL, "genisi", msg); return 1; }
+#define CHECK_ALLOC(ptr) if (!(ptr)) { goto ERRO_PARTITION; }
+
+#define INIT_PARTION(p) \
+  p->usedsize = 0; \
+  p->size_bytes = SIZE; \
+  p->memory = malloc(SIZE * sizeof(Alloc*)); \
+  CHECK_ALLOC(p->memory)
+
+static int total_allocs = 0;
+static int total_free = 0;
 
 // partições.
 Partion* USER = NULL;
 Partion* GENISI = NULL;
 Partion* JAVA = NULL;
 
-int android_memoryInit()
+__attribute__((used)) int android_memoryInit()
 {
   USER = malloc(sizeof(Partion));
   GENISI = malloc(sizeof(Partion));
   JAVA = malloc(sizeof(Partion));
   
-  CHECK_ALLOC(USER,"Erro to allocated USER partition!");
-  CHECK_ALLOC(GENISI,"Erro to allocated GENISI partition!");
-  CHECK_ALLOC(JAVA,"Erro to allocated JAVA partition!");
+  CHECK_ALLOC(USER);
+  CHECK_ALLOC(GENISI);
+  CHECK_ALLOC(JAVA);
+  INIT_PARTION(USER);
+  INIT_PARTION(GENISI);
+  INIT_PARTION(JAVA);
   
-  USER->usedsize = 0;
-  USER->size_bytes = SIZE;
-  GENISI->usedsize = 0;
-  GENISI->size_bytes = SIZE;
-  JAVA->size_bytes = SIZE;
-  JAVA->usedsize = 0;
-  
-  USER->memory = malloc((SIZE / sizeof(Alloc)) * sizeof(Alloc*));
-  GENISI->memory = malloc((SIZE / sizeof(Alloc)) * sizeof(Alloc*));
-  JAVA->memory = malloc((SIZE / sizeof(Alloc)) * sizeof(Alloc*));
-  if (!USER->memory || !GENISI->memory || !JAVA->memory) {
-    android_log(FATAL, "genisi", "Failed to allocate partition memory");
-    return 2;
-  }
   android_log(INFO, "genisi", "Partitions allocated successfully!");
   return 0;
+  
+  ERRO_PARTITION: // goto
+  free(GENISI);
+  free(USER);
+  free(JAVA);
+  android_log(ERRO,"genisi","Erro to alocated partition!");
+  return 1;
 }
 
-Alloc* android_malloc(unsigned int size, androidSpaces sp)
+static Partion* get_partion(androidSpaces sp)
+{
+  /* 
+    Retorna a partição do tipo.
+  */
+  switch (sp) {
+    case USER_SPACE:
+    return USER;
+    case GENISI_SPACE:
+    return GENISI;
+    case JAVA_SPACE:
+    return JAVA;
+    default:
+    android_log(ERRO,"genisi","Invalid space!");
+    return NULL;
+  }
+}
+
+static const char* get_namePartion(androidSpaces sp)
+{
+  switch (sp) {
+    case USER_SPACE:
+    return "USER";
+    case JAVA_SPACE:
+    return "JAVA";
+    case GENISI_SPACE:
+    return "GENISI";
+  }
+}
+__attribute__((used)) Alloc* android_malloc(unsigned int size, androidSpaces sp)
 {
   Alloc* diretive = malloc(sizeof(Alloc));
   void* prt = malloc(size);
   if (!prt || !diretive) {
-    android_log(ERRO, "genisi", "Error allocating pointer %p!", diretive);
+    free(prt);
+    free(diretive);
+    android_log(ERRO, "genisi", "Error allocating pointer in %s!", get_namePartion(sp));
     return NULL;
   }
   diretive->ptr = prt;
   diretive->size = size;
-  /*
-  Melhoria:
-    Ao invez de usar switch para cada partições usar um LINKER para indicar a partição e apenas escrever uma logica.
-  */
-  switch (sp) {
-    case USER_SPACE:
-    diretive->pose = USER->usedsize;
-    USER->memory[USER->usedsize] = diretive;
-    USER->size_bytes += size;
-    USER->usedsize++;
-    break;
-    case GENISI_SPACE:
-    diretive->pose = GENISI->usedsize;
-    GENISI->memory[GENISI->usedsize] = diretive;
-    GENISI->size_bytes += size;
-    GENISI->usedsize++;
-    break;
-    case JAVA_SPACE:
-    diretive->pose = JAVA->usedsize;
-    JAVA->memory[JAVA->usedsize] = diretive;
-    break;
-  }
-  android_log(INFO, "genisi", "Successfully allocated pointer %p in %d", diretive, diretive->pose);
+  Partion* linker = get_partion(sp);
+  diretive->pose = linker->usedsize;
+    linker->memory[linker->usedsize] = diretive;
+  linker->size_bytes += size;
+  linker->usedsize++;
+  android_log(INFO, "genisi", "Successfully allocated pointer %p in %s", diretive, get_namePartion(sp));
+  total_allocs++;
   return diretive;
 }
 
-void android_free(Alloc* ptr, androidSpaces sp)
+__attribute__((used)) void android_free(Alloc* ptr, androidSpaces sp)
 {
   int pose = ptr->pose;
   free(ptr->ptr);
-  /*
-  Melhoria:
-    Ao invez de usar switch para cada partições usar um LINKER para indicar a partição e apenas escrever uma logica.
-  */
-  switch (sp) {
-    case USER_SPACE:
-    if (pose+1 < USER->usedsize) {
-      USER->memory[pose] = USER->memory[pose+1];
-      USER->memory[pose+1]->pose--;
-    } else {
-      USER->memory[pose] = NULL;
-    }
-    free(ptr);
-    USER->usedsize--;
-    break;
-    case GENISI_SPACE:
-    if (pose+1 < GENISI->usedsize) {
-      GENISI->memory[pose] = GENISI->memory[pose+1];
-      GENISI->memory[pose+1]->pose--;
-    } else {
-      GENISI->memory[pose] = NULL;
-    }
-    free(ptr);
-    GENISI->usedsize--;
-    break;
-    case JAVA_SPACE:
-    if (pose+1 < JAVA->usedsize) {
-      JAVA->memory[pose] = JAVA->memory[pose+1];
-      JAVA->memory[pose+1]->pose--;
-    } else {
-      JAVA->memory[pose] = NULL;
-    }
-    free(ptr);
-    JAVA->usedsize--;
-    break;
+  Partion* linker = get_partion(sp);
+ for (int i = pose; i < linker->usedsize - 1; i++) {
+    linker->memory[i] = linker->memory[i + 1];
+    linker->memory[i]->pose = i;
   }
-  android_log(INFO, "genisi", "Pointer deleted at: %d", pose);
+  linker->memory[linker->usedsize - 1] = NULL;
+  linker->usedsize--;
+  free(ptr);
+  android_log(INFO, "genisi", "Pointer deleted in %s to %d", get_namePartion(sp), pose);
+  total_free++;
 }
 
-void android_memoryClose()
+__attribute__((used)) void android_memoryClose()
 {
+  android_log(INFO,"genisi","total allocs: %d!",total_allocs);
+  android_log(INFO,"genisi","total free: %d!",total_free);
   if (GENISI == NULL || USER == NULL || JAVA == NULL) {
-    android_log(INFO, "genisi", "Partitions be closed!");
-    return;
+    goto END_MEMORY_CLOSE;
   }
-  if (0 < USER->usedsize || 0 < GENISI->usedsize || JAVA->usedsize) {
+  if (USER->usedsize == 0 && GENISI->usedsize == 0 && JAVA->usedsize == 0)
+  {
     free(USER->memory);
-    free(USER);
     free(GENISI->memory);
     free(JAVA->memory);
-    free(JAVA);
+    free(USER);
     free(GENISI);
-    android_log(INFO, "genisi", "Partitions released successfully!");
-    return;
+    free(JAVA);
+    goto END_MEMORY_CLOSE;
   }
   for (int i = 0; i < USER->usedsize; i++) {
     free(USER->memory[i]->ptr);
@@ -152,8 +146,10 @@ void android_memoryClose()
   free(GENISI);
   free(JAVA->memory);
   free(JAVA);
+  END_MEMORY_CLOSE: // goto
   USER = NULL;
   GENISI = NULL;
   JAVA = NULL;
   android_log(INFO, "genisi", "Partitions released successfully!");
+  return;
 }

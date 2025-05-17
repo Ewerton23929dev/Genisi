@@ -10,12 +10,12 @@
 int androidDebug = ON;
 const char* pathLoggin;
 
-void android_FileLog(const char* path) {
+__attribute__((used)) void android_FileLog(const char* path) {
   pathLoggin = path;
 }
 
 // sistema de log
-int android_log(AndroidLoggin mode, const char* tag,const char* fmt, ...) {
+__attribute__((used)) int android_log(AndroidLoggin mode, const char* tag,const char* fmt, ...) {
   char buffer[1000];
   va_list args;
   va_start(args,fmt);

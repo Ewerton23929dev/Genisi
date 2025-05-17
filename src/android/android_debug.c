@@ -6,7 +6,7 @@
 #include <pthread.h>
 
 
-void* android_goto_wrapper(void* arg) {
+__attribute__((used)) void* android_goto_wrapper(void* arg) {
     android_goto_args* data = (android_goto_args*)arg;
     if (data->func) {
         int result = data->func(data->code, data->fixe);
@@ -16,7 +16,7 @@ void* android_goto_wrapper(void* arg) {
     return NULL;
 }
 
-int android_goto(goto_moldel func, int code, const char* fixe) {
+__attribute__((used)) int android_goto(goto_moldel func, int code, const char* fixe) {
     pthread_t thread;
 
     android_goto_args* data = malloc(sizeof(android_goto_args));

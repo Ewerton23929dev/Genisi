@@ -10,13 +10,13 @@
 // suporte para android 10++ api 29++
 // Definição do enum para representar versões do Android
 
-long int android_memoryLimits() {
+__attribute__((used)) long int android_memoryLimits() {
     struct rlimit limit;
     getrlimit(RLIMIT_AS, &limit);
     return limit.rlim_cur;
 }
 
-AndroidGlobals android_globals() {
+__attribute__((used)) AndroidGlobals android_globals() {
     AndroidGlobals global = {-1,-1,-1,-1};
     struct sysinfo info;
     if (sysinfo(&info) == 0) {
@@ -32,7 +32,7 @@ AndroidGlobals android_globals() {
 }
 
 // Função que retorna o enum baseado no valor da API em tempo de execução
-AndroidVersion get_android_version() {
+__attribute__((used)) AndroidVersion get_android_version() {
     int api_level = android_get_device_api_level();  // Obtém a API real do sistema
 
     switch (api_level) {
@@ -61,12 +61,12 @@ AndroidVersion get_android_version() {
     }
 }
 //checa ser e root!
-int android_isroot() {
+__attribute__((used)) int android_isroot() {
     return getuid() == 0;
 }
 
 // pega a arquitera do sistema!
-const char* android_arch() {
+__attribute__((used)) const char* android_arch() {
     #if defined(__x86_64__) || defined(__amd64__)
         return "x86_64";
     #elif defined(__i386__)

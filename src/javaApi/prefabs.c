@@ -8,17 +8,17 @@
 #include <androidModules/android_memory.h>
 
 // Java_Genisi_getVersion
-JNIEXPORT jstring JNICALL Java_Genisi_getVersion(JNIEnv *env, jobject obj)
+__attribute__((used)) JNIEXPORT jstring JNICALL Java_Genisi_getVersion(JNIEnv *env, jobject obj)
 {
     return (*env)->NewStringUTF(env, "Genisi v1.0");
 }
 
 // Java_Genisi_InitMemory
-JNIEXPORT void JNICALL Java_Genisi_InitMemory(JNIEnv *env, jobject obj) {
+__attribute__((used)) JNIEXPORT void JNICALL Java_Genisi_InitMemory(const JNIEnv *env, jobject obj) {
     android_memoryInit();
 }
 
 // Java_Genisi_CloseMemory
-JNIEXPORT void JNICALL Java_Genisi_CloseMemory(JNIEnv *env, jobject obj) {
+__attribute__((used)) JNIEXPORT void JNICALL Java_Genisi_CloseMemory(const JNIEnv *env, jobject obj) {
     android_memoryClose();
 }

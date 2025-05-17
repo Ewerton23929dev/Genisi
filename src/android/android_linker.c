@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-GenisiHandle* android_dload(const char* path) {
+__attribute__((used)) GenisiHandle* android_dload(const char* path) {
   GenisiHandle* lib = malloc(sizeof(GenisiHandle));
   if (!lib) {
     android_log(ERRO, "genisi", "Failed to allocate library handle %s", path);
@@ -20,7 +20,7 @@ GenisiHandle* android_dload(const char* path) {
   return lib;
 }
 
-void* android_dlMethod(GenisiHandle* handle, const char* name) {
+__attribute__((used)) void* android_dlMethod(GenisiHandle* handle, const char* name) {
   if (!handle || !name) {
     android_log(INFO, "genisi", "Incorrect parameters passed in android_dlMethod!");
     return NULL;
@@ -33,7 +33,7 @@ void* android_dlMethod(GenisiHandle* handle, const char* name) {
   return func;
 }
 
-void android_dlexit(GenisiHandle* handle) {
+__attribute__((used)) void android_dlexit(GenisiHandle* handle) {
   if (!handle) {
     android_log(ERRO, "genisi", "Error trying to close NULL!");
     return;
@@ -45,7 +45,7 @@ void android_dlexit(GenisiHandle* handle) {
   free(handle);
 }
 
-GenisiHandle* android_dlauto(const char* name) {
+__attribute__((used)) GenisiHandle* android_dlauto(const char* name) {
   char buffer[400];
   snprintf(buffer, sizeof(buffer), "/system/lib/%s", name);
   return android_dload(buffer);

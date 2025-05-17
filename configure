@@ -40,7 +40,7 @@ cat > Makefile <<'EOF'
 CC = gcc
 CFLAGS = -I./lib -I./genisi -fPIC
 STATIC = -llog -ldl
-OBJS = src/android/android.o src/android/android_sys.o src/android/android_memory.o src/android/android_linker.o src/android/android_debug.o src/javaApi/binding.o src/javaApi/functions.o src/javaApi/prefabs.o
+OBJS = src/android/android.o src/android/android_sys.o src/android/android_memory.o src/android/android_linker.o src/android/android_debug.o src/javaApi/functions.o src/javaApi/prefabs.o
 
 all:
 	@echo "Compiling objects android..."
@@ -55,8 +55,6 @@ all:
 	@echo "Compiling object src/android/android_debug.o.."
 	@$(CC) $(CFLAGS) -c src/android/android_debug.c -o src/android/android_debug.o
 	@echo "Compiling objects javaApi..."
-	@echo "Compiling object src/javaApi/binding.c..."
-	@$(CC) $(CFLAGS) -c src/javaApi/binding.c -o src/javaApi/binding.o
 	@echo "Compiling object src/javaApi/functions.o..."
 	@$(CC) $(CFLAGS) -c src/javaApi/functions.c -o src/javaApi/functions.o
 	@echo "Compiling object src/javaApi/prefabs.o..."
@@ -70,7 +68,7 @@ clear:
 	@echo "clear..."
 	@rm libgenisi.so*
 exemple:
-	@$(CC) -g -L./ -I./genisi test/main.c -o exemple -lgenisi
+	./test/run_test.sh
 EOF
 
 echo " END  Configure ok.."
