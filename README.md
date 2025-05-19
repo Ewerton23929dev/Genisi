@@ -10,6 +10,7 @@ git clone https://github.com/Ewerton23929dev/Genisi.git
 Clone o repositório e logo em seguida execute.
 ```bash
 cd genisi
+./configure
 make
 ```
 **Atenção**: Este projeto requer bibliotecas de ambiente android certifique-se que possui as bibliotecas para copilação.
